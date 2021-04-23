@@ -114,34 +114,39 @@ let ContactUs = async (req, res) => {
 
 let UploadImages = async (req, res) => {
     // console.log(req.files)
-    let errorMessages = [];
-    let fileNames = [];
-    req.files.map((item)=>{
-        fileNames.push(item.filename);
+    try {
+        let errorMessages = [];
+        let fileNames = [];
+        req.files.map((item)=>{
+            fileNames.push(item.filename);
 
-    })
-    if (!req.files) {
-        errorMessages.push({message: {msg: "You must select an image."}})
-    }
-    if (validationResult(req).errors.length || errorMessages.length) {
-        if (req.files) {
-            // fs.unlink(req.files.path, err => {
-            //     console.log(err);
-            // })
+        })
+        if (!req.files) {
+            errorMessages.push({message: {msg: "You must select an image."}})
         }
-        errorMessages.push({message: validationResult(req).errors})
-        return res.status(404).json({errors: errorMessages})
+        if (validationResult(req).errors.length || errorMessages.length) {
+            if (req.files) {
+                // fs.unlink(req.files.path, err => {
+                //     console.log(err);
+                // })
+            }
+            errorMessages.push({message: validationResult(req).errors})
+            return res.status(404).json({errors: errorMessages})
+        }
+
+        let storeImage = new Images({
+            name: JSON.stringify(fileNames),
+        })
+
+        if(!storeImage){
+            return res.status(409).json({message: "Server Error!"});
+        }
+        await storeImage.save()
+        res.status(200).json({message: "Successfully store", data: JSON.parse(storeImage.name)});
+    }catch (e) {
+        res.status(400).json({error:e});
     }
 
-    let storeImage = new Images({
-        name: JSON.stringify(fileNames),
-    })
-
-    if(!storeImage){
-        return res.status(409).json({message: "Server Error!"});
-    }
-    await storeImage.save()
-    res.status(200).json({message: "Successfully store", data: JSON.parse(storeImage.name)});
 }
 
 let GetAllImages = async (req, res) => {
