@@ -90,22 +90,26 @@ let UserLogin = async (req, res) => {
 }
 
 let ContactUs = async (req, res) => {
-    let errorMessage = [];
-    const { name, email, phone, message } = req.body;
-    if (validationResult(req).errors.length || errorMessage.length) {
-        errorMessage.push({message: validationResult(req).errors})
-        return res.status(401).json({errors: errorMessage})
+    try {
+        let errorMessage = [];
+        const { name, email, phone, message } = req.body;
+        if (validationResult(req).errors.length || errorMessage.length) {
+            errorMessage.push({message: validationResult(req).errors})
+            return res.status(401).json({errors: errorMessage})
+        }
+        let contactCreate = new Contact({
+            name,
+            email,
+            phone,
+            message
+        });
+
+        await contactCreate.save();
+
+        res.status(200).json({message: "Successfully added"});
+    } catch (err) {
+        res.status(400).json({error: err});
     }
-    let contactCreate = new Contact({
-        name,
-        email,
-        phone,
-        message
-    });
-
-    await contactCreate.save();
-
-    res.status(200).json({message: "Successfully added"});
 }
 
 let UploadImages = async (req, res) => {
