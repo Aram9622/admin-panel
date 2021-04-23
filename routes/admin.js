@@ -31,6 +31,7 @@ app.post('/login', UserLoginMiddleware, controller.UserLogin);
 
 // product
 app.post('/store', upload.array('photo'), controller.UploadImages);
+app.get('/get-all', controller.GetAllImages)
 app.post('/contact', ContactUs, controller.ContactUs);
 // app.post('/category', CategoryMiddleware, productController.StoreCategory);
 // app.get('/category/:slug', productController.GetBySlugCategory)

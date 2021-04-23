@@ -119,11 +119,11 @@ let ContactUs = async (req, res) => {
 }
 
 let UploadImages = async (req, res) => {
-    console.log(req.files[0].filename);
     let errorMessages = [];
     let fileNames = [];
     req.files.map((item)=>{
         fileNames.push(item.filename);
+
     })
     if (!req.files) {
         errorMessages.push({message: {msg: "You must select an image."}})
@@ -146,9 +146,18 @@ let UploadImages = async (req, res) => {
         return res.status(409).json({message: "Server Error!"});
     }
     await storeImage.save()
-    console.log(storeImage)
     res.status(200).json({message: "Successfully store", data: JSON.parse(storeImage.name)});
 }
+
+let GetAllImages = async (req, res) => {
+    const images = await Images.find();
+    let fileName = [];
+    images.map((item)=>{
+        fileName.push(item.name);
+    })
+    res.status(200).json({data: JSON.parse(fileName)});
+}
+
 //
 // let UserUpdate = async (req, res) => {
 //     const _id = req.id;
@@ -320,7 +329,8 @@ module.exports = {
     // UserRegistration,
     UserLogin,
     ContactUs,
-    UploadImages
+    UploadImages,
+    GetAllImages
     // UserDelete,
     // UserUpdate,
     // ResetPassword,
