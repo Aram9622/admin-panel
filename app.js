@@ -8,7 +8,7 @@ app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(require('./routes/admin'))
+app.use(require('./routes/admin').admin)
 
 // 404
 app.use((req, res)=>{

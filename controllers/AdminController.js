@@ -92,16 +92,7 @@ let UserLogin = async (req, res) => {
 let ContactUs = async (req, res) => {
     let errorMessage = [];
     const { name, email, phone, message } = req.body;
-    // if (!req.file) {
-    //     console.log('here');
-    //     errorMessage.push({message: {msg: "You must select an image."}})
-    // }
     if (validationResult(req).errors.length || errorMessage.length) {
-        // if (req.file) {
-        //     fs.unlink(req.file.path, err => {
-        //         console.log(err);
-        //     })
-        // }
         errorMessage.push({message: validationResult(req).errors})
         return res.status(401).json({errors: errorMessage})
     }
@@ -110,7 +101,6 @@ let ContactUs = async (req, res) => {
         email,
         phone,
         message
-        // image: req.file.filename,
     });
 
     await contactCreate.save();

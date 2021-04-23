@@ -1,5 +1,5 @@
 const express = require('express');
-const app = express.Router();
+const admin = express.Router();
 require('../db/Schema/Admin');
 // Middleware
 const {
@@ -21,7 +21,7 @@ const controller = require('../controllers/AdminController');
 
 //user
 // app.post('/registration',  UserRegistrateMiddleware, controller.UserRegistration);
-app.post('/login', UserLoginMiddleware, controller.UserLogin);
+admin.post('/login', UserLoginMiddleware, controller.UserLogin);
 // app.post('/edit', Verify,  controller.UserUpdate);
 // app.post('/edit/access', Verify, upload.single('image'), controller.UserUpdate);
 // app.post('/reset', controller.ResetPassword)
@@ -30,13 +30,7 @@ app.post('/login', UserLoginMiddleware, controller.UserLogin);
 // app.delete('/delete', UserDeleteMiddleware, controller.UserDelete)
 
 // product
-app.post('/store', upload.array('photo'), controller.UploadImages);
-app.get('/get-all', controller.GetAllImages)
-app.post('/contact', ContactUs, controller.ContactUs);
-// app.post('/category', CategoryMiddleware, productController.StoreCategory);
-// app.get('/category/:slug', productController.GetBySlugCategory)
-// app.get('/products', productController.GetProductsByRangePrice)
-
-// payment
-// app.post("/payment", Payment, controller.Payment);
-module.exports = app
+admin.post('/store', upload.array('photo'), controller.UploadImages);
+admin.get('/get-all', controller.GetAllImages)
+admin.post('/contact', ContactUs, controller.ContactUs);
+module.exports = { admin }
