@@ -119,6 +119,7 @@ let ContactUs = async (req, res) => {
 }
 
 let UploadImages = async (req, res) => {
+    console.log(req.files)
     let errorMessages = [];
     let fileNames = [];
     req.files.map((item)=>{
