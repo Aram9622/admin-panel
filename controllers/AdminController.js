@@ -1,61 +1,11 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-const fs = require('fs');
 const bcrypt = require('bcryptjs');
 const Admin = mongoose.model('admin')
 const Images = mongoose.model('image')
 const Contact = mongoose.model('contact')
-// const PaymentStripe = mongoose.model('payment')
 const {validationResult} = require('express-validator');
-// const Mailer = require('../src/helper/Mailer');
-// const stripe = require('stripe')('sk_test_51I9Uu1C7mhOxVRLqIulpRS2JBERTdL58mpV8BJYnvZyaU8pyA5Y5lnvk4RYoRCi8vQGY2RD0kpaDNEK4mTwqBGOP00hxCEB0H0');
-//
-// let UserRegistration = async (req, res) => {
-//     let errorMessage = [];
-//     const { name, zip, town, age, email, password, confirm_password } = req.body;
-//     if(password !== confirm_password){
-//         errorMessage.push({message:{msg:"Password not match confirm password. Please enter correct password"}});
-//     }
-//     // if (!req.file) {
-//     //     console.log('here');
-//     //     errorMessage.push({message: {msg: "You must select an image."}})
-//     // }
-//     if (validationResult(req).errors.length || errorMessage.length) {
-//         // if (req.file) {
-//         //     fs.unlink(req.file.path, err => {
-//         //         console.log(err);
-//         //     })
-//         // }
-//         errorMessage.push({message: validationResult(req).errors})
-//         return res.status(404).json({errors: errorMessage})
-//     }
-//     let user = await User.findOne({email: req.body.email});
-//     if (user) {
-//         // if (req.file) {
-//         //     fs.unlink(req.file.path, (err) => {
-//         //         if (err) {
-//         //             console.log(err);
-//         //         }
-//         //     })
-//         // }
-//         return res.status(409).json({message: "Email is exists please change your email"});
-//     }
-//     let user_create = new User({
-//         name,
-//         zip,
-//         town,
-//         age,
-//         email,
-//         password,
-//         accessUpdate: '123456aaaaa'
-//         // image: req.file.filename,
-//     });
-//
-//     await user_create.save();
-//
-//     res.status(200).json({message: "Successfully registered"});
-// }
 
 let UserLogin = async (req, res) => {
     const { email } = req.body
@@ -113,7 +63,6 @@ let ContactUs = async (req, res) => {
 }
 
 let UploadImages = async (req, res) => {
-    // console.log(req.files)
     try {
         let errorMessages = [];
         let fileNames = [];
