@@ -157,7 +157,6 @@ let GetAllImages = async (req, res) => {
             fileName.push(req.get('host')+'/'+item2);
         })
     })
-    console.log(fileName)
     res.status(200).json({images: fileName});
 }
 
