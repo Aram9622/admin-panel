@@ -154,9 +154,10 @@ let GetAllImages = async (req, res) => {
     const images = await Images.find();
     let fileName = [];
     images.map((item)=>{
-        fileName.push(item.name);
+        fileName.push(JSON.parse(item.name));
     })
-    res.status(200).json({data: JSON.parse(fileName)});
+    // console.log(fileName)
+    res.status(200).json({data: fileName});
 }
 
 //
