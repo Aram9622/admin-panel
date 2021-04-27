@@ -1,13 +1,18 @@
 const express = require('express');
 const admin = express.Router();
+const cors = require('cors')
+const corsOptions = {
+    origin: function (origin, callback) {
+      // db.loadOrigins is an example call to load
+      // a list of origins from a backing database
+      db.loadOrigins(function (error, origins) {
+        callback(error, origins)
+      })
+    }
+  }
 require('../db/Schema/Admin');
 // Middleware
 const {
-    // UserRegistrateMiddleware,
-    // UserDeleteMiddleware,
-    // UserResetPassword,
-    // Verify,
-    // Payment,
     UserLoginMiddleware,
     ContactUs
 } = require('../middleware/AdminMiddleware');
@@ -20,17 +25,9 @@ const controller = require('../controllers/AdminController');
 // ********************* Routes *********************
 
 //user
-// app.post('/registration',  UserRegistrateMiddleware, controller.UserRegistration);
-admin.post('/login', UserLoginMiddleware, controller.UserLogin);
-// app.post('/edit', Verify,  controller.UserUpdate);
-// app.post('/edit/access', Verify, upload.single('image'), controller.UserUpdate);
-// app.post('/reset', controller.ResetPassword)
-// app.post('/reset/code', controller.ResetPassword);
-// app.post('/reset/password', UserResetPassword, controller.ResetPassword)
-// app.delete('/delete', UserDeleteMiddleware, controller.UserDelete)
-
+admin.post('/login', UserLoginMiddleware, cors(corsOptions), controller.UserLogin);
 // product
-admin.post('/store', upload.array('photo'), controller.UploadImages);
-admin.get('/get-all', controller.GetAllImages)
-admin.post('/contact', ContactUs, controller.ContactUs);
+admin.post('/store', upload.array('photo'), cors(corsOptions), controller.UploadImages);
+admin.get('/get-all', cors(corsOptions), controller.GetAllImages)
+admin.post('/contact', ContactUs, cors(corsOptions), controller.ContactUs);
 module.exports = { admin }
