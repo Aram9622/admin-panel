@@ -25,9 +25,9 @@ const controller = require('../controllers/AdminController');
 // ********************* Routes *********************
 
 //user
-admin.post('/login', UserLoginMiddleware, cors(corsOptions), controller.UserLogin);
+admin.post('/login', UserLoginMiddleware, controller.UserLogin);
 // product
-admin.post('/store', upload.array('photo'), cors(corsOptions), controller.UploadImages);
+admin.post('/store', upload.array('photo'), controller.UploadImages);
 admin.get('/get-all', cors(corsOptions), controller.GetAllImages)
-admin.post('/contact', ContactUs, cors(corsOptions), controller.ContactUs);
+admin.post('/contact', ContactUs,  controller.ContactUs);
 module.exports = { admin }
